@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Camere";
+}
+
+<h2 class="mt-3">LE NOSTRE STANZE</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Numero camera</th>
+            <th scope="col">Tipo camera</th>
+            <th scope="col">Descrizione</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var camera in Model)
+        {
+            <tr>
+                <th scope="row">@camera.CameraId</th>
+                <td>@camera.TipologiaCamera.TipologiaCamera</td>
+                <td>@camera.Descrizione</td>
+            </tr>
+        }
+    </tbody>
+</table>

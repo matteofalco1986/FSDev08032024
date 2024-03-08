@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "ElencoClienti";
+}
+
+<h2 class="mt-3">CLIENTI</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id Cliente</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Cognome</th>
+            <th scope="col">Codice Fiscale</th>
+            <th scope="col">Citta</th>
+            <th scope="col">Provincia</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Numero di telefono</th>
+            <th scope="col">Numero di cellulare</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <th scope="row">@customer.ClienteId</th>
+                <td>@customer.Nome</td>
+                <td>@customer.Cognome</td>
+                <td>@customer.CodiceFiscale</td>
+                <td>@customer.Citta</td>
+                <td>@customer.Provincia</td>
+                <td>@customer.Email</td>
+                <td>@customer.Telefono</td>
+                <td>@customer.Mobile</td>
+            </tr>
+        }
+    </tbody>
+</table>
