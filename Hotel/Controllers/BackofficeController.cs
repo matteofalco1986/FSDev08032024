@@ -1,10 +1,12 @@
 ﻿using Hotel.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace Hotel.Controllers
 {
@@ -378,11 +380,7 @@ namespace Hotel.Controllers
                         TipologiaCameraId = (int)reader["TipologiaCameraId"],
                         Descrizione = (string)reader["Descrizione"],
                     };
-                    var tipologiaCamera = new TipologieCamera()
-                    {
-                        TipologiaCameraId = (int)reader["TipologiaCameraId"],
-                        TipologiaCamera = (string)reader["TipologiaCamera"],
-                    };
+
                     var cliente = new Clienti()
                     {
                         ClienteId = (int)reader["ClienteId"],
@@ -395,6 +393,12 @@ namespace Hotel.Controllers
                         Telefono = (string)reader["Telefono"],
                         Mobile = (string)reader["Mobile"],
                     };
+                    var tipologiaCamera = new TipologieCamera()
+                    {
+                        TipologiaCameraId = (int)reader["TipologiaCameraId"],
+                        TipologiaCamera = (string)reader["TipologiaCamera"],
+                    };
+
                     prenotazione.PrenotazioneId = (int)reader["PrenotazioneId"];
                     prenotazione.ClienteId = (int)reader["ClienteId"];
                     prenotazione.CameraId = (int)reader["CameraId"];
@@ -443,6 +447,108 @@ namespace Hotel.Controllers
                 }
             }
             return Json(Customers, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Checkout(int? id)
+        {
+            if (id == null) return RedirectToAction("Prenotazioni", "Backoffice");
+
+
+            var conn = Commands.ConnectToDb();
+            var commandPrenotazione = new SqlCommand(Queries.SingleBookingWithDetails, conn);
+            var commandAmenities = new SqlCommand(Queries.AmenitiesById, conn);
+
+            commandPrenotazione.Parameters.AddWithValue("@PrenotazioneId", id);
+            commandAmenities.Parameters.AddWithValue("@PrenotazioneId", id);
+
+            var reader = commandPrenotazione.ExecuteReader();
+
+            var prenotazione = new Prenotazioni();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    var tipoPrenotazione = new TipiPrenotazione()
+                    {
+                        TipoPrenotazioneId = (int)reader["TipoPrenotazioneId"],
+                        TipoPrenotazione = (string)reader["TipoPrenotazione"],
+
+                    };
+                    var camera = new Camere()
+                    {
+                        CameraId = (int)reader["CameraId"],
+                        TipologiaCameraId = (int)reader["TipologiaCameraId"],
+                        Descrizione = (string)reader["Descrizione"],
+                    };
+                    var tipologiaCamera = new TipologieCamera()
+                    {
+                        TipologiaCameraId = (int)reader["TipologiaCameraId"],
+                        TipologiaCamera = (string)reader["TipologiaCamera"],
+                    };
+                    var cliente = new Clienti()
+                    {
+                        ClienteId = (int)reader["ClienteId"],
+                        Nome = (string)reader["Nome"],
+                        Cognome = (string)reader["Cognome"],
+                        CodiceFiscale = (string)reader["CodiceFiscale"],
+                        Citta = (string)reader["Citta"],
+                        Provincia = (string)reader["Provincia"],
+                        Email = (string)reader["Email"],
+                        Telefono = (string)reader["Telefono"],
+                        Mobile = (string)reader["Mobile"],
+                    };
+                    prenotazione.PrenotazioneId = (int)reader["PrenotazioneId"];
+                    prenotazione.ClienteId = (int)reader["ClienteId"];
+                    prenotazione.CameraId = (int)reader["CameraId"];
+                    prenotazione.TipoPrenotazioneId = (int)reader["TipoPrenotazioneId"];
+                    prenotazione.Data = (DateTime)reader["Data"];
+                    prenotazione.Anno = (int)reader["Anno"];
+                    prenotazione.InizioSoggiorno = (DateTime)reader["InizioSoggiorno"];
+                    prenotazione.FineSoggiorno = (DateTime)reader["FineSoggiorno"];
+                    prenotazione.NumeroNotti = (int)((DateTime)reader["FineSoggiorno"] - (DateTime)reader["InizioSoggiorno"]).Days;
+                    prenotazione.Caparra = Convert.ToDouble(reader["Caparra"]);
+                    prenotazione.Tariffa = Convert.ToDouble(reader["Tariffa"]);
+                    prenotazione.Cliente = cliente;
+                    prenotazione.TipoPrenotazione = tipoPrenotazione;
+                    prenotazione.Camera = camera;
+                    prenotazione.Camera.TipologiaCamera = tipologiaCamera;
+                }
+            }
+            reader.Close();
+
+            reader = commandAmenities.ExecuteReader();
+
+            // Lista amenities
+            var amenities = new List<Amenities>();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    {
+                        var amenity = new Amenities();
+                        var servizioAggiuntivo = new ListaServiziAggiuntivi()
+                        {
+                            ServizioId = (int)reader["ServizioId"],
+                            TipoServizio = (string)reader["TipoServizio"],
+                            Prezzo = Convert.ToDouble(reader["Prezzo"]),
+
+                        };
+                        amenity.AmenityId = (int)reader["AmenityId"];
+                        amenity.PrenotazioneId = (int)reader["PrenotazioneId"];
+                        amenity.ServizioId = (int)reader["ServizioId"];
+                        amenity.Data = (DateTime)reader["Data"];
+                        amenity.Quantita = (int)reader["Quantita"];
+                        amenity.ServizioAggiuntivo = servizioAggiuntivo;
+                        amenities.Add(amenity);
+                    };
+                }
+            }
+            reader.Close();
+            conn.Close();
+
+            ViewBag.Amenities = amenities;
+            return View(prenotazione);
         }
     }
 }

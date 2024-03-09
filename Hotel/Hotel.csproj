@@ -195,6 +195,7 @@
     <Content Include="Views\Backoffice\Camere.cshtml" />
     <Content Include="Views\Backoffice\Amenities.cshtml" />
     <Content Include="Views\Backoffice\Prenotazioni.cshtml" />
+    <Content Include="Views\Backoffice\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

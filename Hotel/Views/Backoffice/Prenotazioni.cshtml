@@ -51,6 +51,7 @@
                 <td>@prenotazione.NumeroNotti</td>
                 <td>$ @(prenotazione.Caparra)</td>
                 <td>$ @(prenotazione.Tariffa)</td>
+                <td>@Html.ActionLink("Go to checkout", "Checkout", "Backoffice", new { id = prenotazione.PrenotazioneId }, new { @class = "btn btn-success" })</td>
             </tr>
         }
     </tbody>

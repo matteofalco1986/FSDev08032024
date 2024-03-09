@@ -32,6 +32,19 @@ namespace Hotel.Models
                                                      ON Prenotazioni.TipoPrenotazioneId = TipiPrenotazione.TipoPrenotazioneId
                                                      JOIN TipologieCamera AS TipologieCamera
                                                      ON Camere.TipologiaCameraId = TipologieCamera.TipologiaCameraId";
-
+        public static string SingleBookingWithDetails = @"SELECT * FROM Prenotazioni AS Prenotazioni 
+                                                     JOIN Clienti AS Clienti 
+                                                     ON Prenotazioni.ClienteId = Clienti.ClienteId
+                                                     JOIN Camere AS Camere
+                                                     ON Prenotazioni.CameraId = Camere.CameraId
+                                                     JOIN TipiPrenotazione AS TipiPrenotazione
+                                                     ON Prenotazioni.TipoPrenotazioneId = TipiPrenotazione.TipoPrenotazioneId
+                                                     JOIN TipologieCamera AS TipologieCamera
+                                                     ON Camere.TipologiaCameraId = TipologieCamera.TipologiaCameraId
+                                                     WHERE Prenotazioni.PrenotazioneId = @PrenotazioneId";
+        public static string AmenitiesById = @"SELECT * FROM Amenities AS Amenities
+                                                JOIN ListaServiziAggiuntivi AS ListaServiziAggiuntivi
+                                                ON Amenities.ServizioId = ListaServiziAggiuntivi.ServizioId
+                                                WHERE Amenities.PrenotazioneId = @PrenotazioneId";
+        }
     }
-}
