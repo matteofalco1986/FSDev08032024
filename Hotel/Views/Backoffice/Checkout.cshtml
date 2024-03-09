@@ -32,29 +32,38 @@
 
 <h3 class="mt-3">DETTAGLI SERVIZI AGGIUNTIVI</h3>
 
-<table class="table mb-3">
-    <thead>
-        <tr>
-            <th scope="col">Id Prenotazione</th>
-            <th scope="col">Servizio richiesto</th>
-            <th scope="col">Quantita</th>
-            <th scope="col">Prezzo</th>
-            <th scope="col">Data richiesta</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var amenity in ViewBag.Amenities)
-        {
+@if (ViewBag.Amenities.Count == 0)
+{
+    <h4 class="text-center mt-3 mb-3">Non sono stati acquistati servizi aggiuntivi</h4>
+}
+else
+{
+
+
+    <table class="table mb-3">
+        <thead>
             <tr>
-                <th scope="row">@amenity.PrenotazioneId</th>
-                <td>@amenity.ServizioAggiuntivo.TipoServizio</td>
-                <td>@amenity.Quantita</td>
-                <td>$ @(amenity.ServizioAggiuntivo.Prezzo.ToString("0.00"))</td>
-                <td>$ @(amenity.Data.ToString("dd/MM/yyyy"))</td>
+                <th scope="col">Id Prenotazione</th>
+                <th scope="col">Servizio richiesto</th>
+                <th scope="col">Quantita</th>
+                <th scope="col">Prezzo</th>
+                <th scope="col">Data richiesta</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var amenity in ViewBag.Amenities)
+            {
+                <tr>
+                    <th scope="row">@amenity.PrenotazioneId</th>
+                    <td>@amenity.ServizioAggiuntivo.TipoServizio</td>
+                    <td>@amenity.Quantita</td>
+                    <td>$ @(amenity.ServizioAggiuntivo.Prezzo.ToString("0.00"))</td>
+                    <td>$ @(amenity.Data.ToString("dd/MM/yyyy"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 <h3 class="mt-3">DETTAGLI PAGAMENTO</h3>
 
