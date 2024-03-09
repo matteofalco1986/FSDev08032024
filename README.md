@@ -16,7 +16,7 @@ name="DbHotelConnection" connectionString="Server=LAPTOP-1M2QKVCO\SQLEXPRESS; In
 
 SOSTITUIRE L'URL PER LE OPERAZIONI ASINCRONE CON IL PROPRIO LOCALHOST
   -  Andare nel file Views/Backoffice/Prenotazioni.cshtml
-  -  Alle righe 69, 83, 126, trovare il comando "fetch("https://localhost:44367/Backoffice/PensioniComplete")"
+  -  Alle righe 69, 83, 126, trovare il comando "fetch("https://localhost:44367/Backoffice/{EndpointName}")"
   -  Per ogni riga, sostituire la parte "https://localhost:44367" con il proprio url di hosting, se diverso.
 
 NOTA
