@@ -547,6 +547,29 @@ namespace Hotel.Controllers
             reader.Close();
             conn.Close();
 
+            // Calcolo totale prenotazione
+            double totaleNotti = prenotazione.Tariffa * prenotazione.NumeroNotti;
+            double totalePrenotazione = (prenotazione.Tariffa * prenotazione.NumeroNotti) - prenotazione.Caparra;
+
+            // Calcolo amenities
+            List<double> parzialiAmenities = new List<double>();
+            double totaleAmenities = 0;
+            foreach (Amenities amenity in amenities)
+            {
+                double parzialeSingolo = Convert.ToDouble(amenity.Quantita) * amenity.ServizioAggiuntivo.Prezzo;
+                parzialiAmenities.Add(parzialeSingolo);
+                totaleAmenities += parzialeSingolo;
+            }
+
+            // Calcolo totale dovuto
+            double totaleDovuto = totalePrenotazione + totaleAmenities;
+
+            // Passaggio informazioni alla view
+            ViewBag.TotaleNotti = totaleNotti;
+            ViewBag.ParzialiAmenities = parzialiAmenities;
+            ViewBag.TotaleAmenities = totaleAmenities;
+            ViewBag.TotalePrenotazione = totalePrenotazione;
+            ViewBag.TotaleDovuto = totaleDovuto;
             ViewBag.Amenities = amenities;
             return View(prenotazione);
         }
