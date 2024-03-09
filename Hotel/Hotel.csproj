@@ -193,6 +193,8 @@
     <Content Include="Views\Backoffice\ElencoClienti.cshtml" />
     <Content Include="Views\Backoffice\Prenota.cshtml" />
     <Content Include="Views\Backoffice\Camere.cshtml" />
+    <Content Include="Views\Backoffice\Amenities.cshtml" />
+    <Content Include="Views\Backoffice\Prenotazioni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

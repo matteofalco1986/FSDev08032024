@@ -11,13 +11,27 @@ namespace Hotel.Models
         public static string AddCustomer = @"INSERT INTO Clienti (Nome, Cognome, CodiceFiscale, Citta, Provincia, Email, Telefono, Mobile)
                                             VALUES (@Nome, @Cognome, @CodiceFiscale, @Citta, @Provincia, @Email, @Telefono, @Mobile)";
         public static string CustomersList = "SELECT * FROM Clienti";
-        public static string AggiungiPrenotazione = @"INSERT INTO Prenotazioni (ClienteId, CameraId, TipoPrenotazioneId, Data, Anno, InizioSoggiorno, FineSoggiorno, Caparra, Tariffa)
-                                            VALUES (@ClienteId, @CameraId, @TipoPrenotazioneId, @Data, @Anno, @InizioSoggiorno, @FineSoggiorno, @Caparra, @Tariffa)";
+        public static string ServicesList = "SELECT * FROM ListaServiziAggiuntivi";
+        public static string BookingsList = "SELECT * FROM Prenotazioni";
+
+        public static string AggiungiPrenotazione = @"INSERT INTO Prenotazioni (ClienteId, CameraId, TipoPrenotazioneId, Data, Anno, InizioSoggiorno, FineSoggiorno, NumeroNotti, Caparra, Tariffa)
+                                            VALUES (@ClienteId, @CameraId, @TipoPrenotazioneId, @Data, @Anno, @InizioSoggiorno, @FineSoggiorno, @NumeroNotti, @Caparra, @Tariffa)";
+        public static string AggiungiAmenity = @"INSERT INTO Amenities (PrenotazioneId, ServizioId, Data, Quantita)
+                                                    VALUES (@PrenotazioneId, @ServizioId, @Data, @Quantita)";
         public static string RoomsList = "SELECT * FROM Camere";
         public static string TypesOfBookingsList = "SELECT * FROM TipiPrenotazione";
         public static string RoomsDetails = @"SELECT * FROM Camere AS Camere 
                                               JOIN TipologieCamera AS TipologieCamera 
                                               ON Camere.TipologiaCameraId = TipologieCamera.TipologiaCameraId";
+        public static string BookingsWithDetails = @"SELECT * FROM Prenotazioni AS Prenotazioni 
+                                                     JOIN Clienti AS Clienti 
+                                                     ON Prenotazioni.ClienteId = Clienti.ClienteId
+                                                     JOIN Camere AS Camere
+                                                     ON Prenotazioni.CameraId = Camere.CameraId
+                                                     JOIN TipiPrenotazione AS TipiPrenotazione
+                                                     ON Prenotazioni.TipoPrenotazioneId = TipiPrenotazione.TipoPrenotazioneId
+                                                     JOIN TipologieCamera AS TipologieCamera
+                                                     ON Camere.TipologiaCameraId = TipologieCamera.TipologiaCameraId";
 
     }
 }

@@ -42,6 +42,10 @@ namespace Hotel.Models
         [DataType(DataType.DateTime)]
         public DateTime FineSoggiorno { get; set; }
 
+        [Display(Name = "Numero notti")]
+        [Required(ErrorMessage = "Campo obbligatorio")]
+        public int NumeroNotti {  get; set; }
+
         [Display(Name = "Caparra")]
         [Required(ErrorMessage = "Campo obbligatorio")]
         public double Caparra { get; set; }

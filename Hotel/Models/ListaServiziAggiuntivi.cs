@@ -12,7 +12,7 @@ namespace Hotel.Models
         public int ServizioId { get; set; }
 
         [Display(Name = "Tipo servizio")]
-        public int TipoServizio { get; set; }
+        public string TipoServizio { get; set; }
 
         [Display(Name = "Prezzo")]
         public double Prezzo { get; set; }

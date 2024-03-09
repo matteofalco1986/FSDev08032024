@@ -1,0 +1,59 @@
+﻿@model Hotel.Models.Amenities
+
+@{
+    ViewBag.Title = "Amenities";
+}
+
+<h2 class="mt-3">I NOSTRI SERVIZI</h2>
+
+<div class="mt-3">
+    @using (Html.BeginForm("Amenities", "Backoffice", new { Area = "" }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row row-cols-1">
+            <div class="col">
+                @Html.LabelFor(model => model.PrenotazioneId, new { @class = "form-label" })
+            </div>
+            <div class="col">
+                @Html.DropDownListFor(model => model.PrenotazioneId, new SelectList(ViewBag.Prenotazioni, "PrenotazioneId", "PrenotazioneId"), "Seleziona una prenotazione", new { @class = $"form-select {(ViewData.ModelState.IsValidField("PrenotazioneId") ? "" : "is-invalid")}" })
+                @Html.ValidationMessageFor(model => model.PrenotazioneId, null, new { htmlAttributes = new { @class = "invalid-feedback mb" }, style = "color:red;" })
+                <div class="mb-3"></div>
+            </div>
+        </div>
+        <div class="row row-cols-1">
+            <div class="col">
+                @Html.LabelFor(model => model.ServizioId, new { @class = "form-label" })
+            </div>
+            <div class="col">
+                @Html.DropDownListFor(model => model.ServizioId, new SelectList(ViewBag.ServiziAggiuntivi, "ServizioId", "TipoServizio"), "Seleziona un servizio", new { @class = $"form-select {(ViewData.ModelState.IsValidField("ServizioId") ? "" : "is-invalid")}" })
+                @Html.ValidationMessageFor(model => model.ServizioId, null, new { htmlAttributes = new { @class = "invalid-feedback" }, style = "color:red;" })
+                <div class="mb-3"></div>
+            </div>
+        </div>
+        <div class="row row-cols-1">
+            <div class="col">
+                @Html.LabelFor(model => model.Data, new { @class = "form-label" })
+            </div>
+            <div class="col">
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = $"form-control {(ViewData.ModelState.IsValidField("Data") ? "" : "is-invalid")}", type = "date" } })
+                @Html.ValidationMessageFor(model => model.Data, null, new { htmlAttributes = new { @class = "invalid-feedback" }, style = "color:red;" })
+                <div class="mb-3"></div>
+            </div>
+        </div>
+        <div class="row row-cols-1">
+            <div class="col">
+                @Html.LabelFor(model => model.Quantita, new { @class = "form-label" })
+            </div>
+            <div class="col">
+                @Html.EditorFor(model => model.Quantita, new { htmlAttributes = new { @class = $"form-control {(ViewData.ModelState.IsValidField("Quantita") ? "" : "is-invalid")}", type = "number" } })
+                @Html.ValidationMessageFor(model => model.Quantita, null, new { htmlAttributes = new { @class = "invalid-feedback" }, style = "color:red;" })
+                <div class="mb-3"></div>
+            </div>
+        </div>
+        <div class="row row-cols-1">
+            <div class="col">
+                <button type="submit" class="btn btn-success mt-3">Aggiungi alla prenotazione</button>
+            </div>
+        </div>
+    }
+</div>

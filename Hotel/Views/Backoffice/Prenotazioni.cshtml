@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "Prenotazioni";
+}
+
+<h2 class="mt-3">ELENCO PRENOTAZIONI</h2>
+<div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex gap-2">
+        <h5>Filtra per tipo di pernottamento</h5>
+        <select class="selectTipoPernottamento">
+            <option value="0">Visualizza tutti</option>
+            <option value="1">Mezza pensione</option>
+            <option value="2">Pensione completa</option>
+            <option value="3">Prima colazione</option>
+        </select>
+    </div>
+    <div class="d-flex gap-2">
+        <h5>Filtra per CodiceFiscale</h5>
+        <select class="selectorCF">
+        </select>
+
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id Prenotazione</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Numero Stanza</th>
+            <th scope="col">Tipo Stanza</th>
+            <th scope="col">Check-in</th>
+            <th scope="col">Check-out</th>
+            <th scope="col">Numero notti</th>
+            <th scope="col">Caparra</th>
+            <th scope="col">Tariffa per notte</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prenotazione in Model)
+        {
+            <tr>
+                <th scope="row">@prenotazione.PrenotazioneId</th>
+                <td>@(prenotazione.Cliente.Cognome) @(prenotazione.Cliente.Nome)</td>
+                <td>@prenotazione.Cliente.Mobile</td>
+                <td>@prenotazione.CameraId</td>
+                <td>@prenotazione.Camera.TipologiaCamera.TipologiaCamera</td>
+                <td>@prenotazione.InizioSoggiorno.ToString("dd/MM/yyyy")</td>
+                <td>@prenotazione.FineSoggiorno.ToString("dd/MM/yyyy")</td>
+                <td>@prenotazione.NumeroNotti</td>
+                <td>$ @(prenotazione.Caparra)</td>
+                <td>$ @(prenotazione.Tariffa)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+<script>
+    const selector = document.querySelector("select");
+    const tbody = document.querySelector("tbody");
+    const selectorCF = document.querySelector(".selectorCF");
+
+    fetch("https://localhost:44367/Backoffice/ElencoClientiJson")
+        .then(res => res.json())
+        .then(data => {
+
+            selectorCF.innerHTML += `<option value="">Visualizza tutti</option>`
+            for (let i = 0; i < data.length; i++) {
+                selectorCF.innerHTML += `<option>${data[i].CodiceFiscale}</option>`
+            }
+        })
+
+
+    selector.addEventListener("click", () => {
+        tbodyValue = selector.value;
+        tbody.innerHTML = ''
+        fetch("https://localhost:44367/Backoffice/PensioniComplete")
+            .then(res => res.json())
+            .then(data => {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].TipoPrenotazione.TipoPrenotazioneId === +selector.value) {
+                        tbody.innerHTML += `<tr>
+                    <th scope="col">${data[i].PrenotazioneId}</th>
+                    <td>${data[i].Cliente.Cognome}, ${data[i].Cliente.Nome}</td>
+                    <td>${data[i].Cliente.Mobile}</td>
+                    <td>${data[i].CameraId}</td>
+                    <td>${data[i].Camera.TipologiaCamera.TipologiaCamera}</td>
+                    <td>${formatDate(data[i].InizioSoggiorno)}</td>
+                    <td>${formatDate(data[i].FineSoggiorno)}</td>
+                    <td>${data[i].NumeroNotti}</td>
+                    <td>$ ${data[i].Caparra}</td>
+                    <td>$ ${data[i].Tariffa}</td>
+                </tr>`
+                    }
+                }
+                if (+selector.value === 0) {
+                    tbody.innerHTML = ''
+                    for (let i = 0; i < data.length; i++) {
+                        tbody.innerHTML += `<tr>
+                    <th scope="col">${data[i].PrenotazioneId}</th>
+                    <td>${data[i].Cliente.Cognome}, ${data[i].Cliente.Nome}</td>
+                    <td>${data[i].Cliente.Mobile}</td>
+                    <td>${data[i].CameraId}</td>
+                    <td>${data[i].Camera.TipologiaCamera.TipologiaCamera}</td>
+                    <td>${formatDate(data[i].InizioSoggiorno)}</td>
+                    <td>${formatDate(data[i].FineSoggiorno)}</td>
+                    <td>${data[i].NumeroNotti}</td>
+                    <td>$ ${data[i].Caparra}</td>
+                    <td>$ ${data[i].Tariffa}</td>
+                </tr>`
+
+                    }
+                }
+            });
+    })
+
+    selectorCF.addEventListener("click", () => {
+        tbodyValue = selectorCF.value;
+        tbody.innerHTML = ''
+        fetch("https://localhost:44367/Backoffice/PensioniComplete")
+            .then(res => res.json())
+            .then(data => {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].Cliente.CodiceFiscale === selectorCF.value) {
+                        tbody.innerHTML += `<tr>
+                    <th scope="col">${data[i].PrenotazioneId}</th>
+                    <td>${data[i].Cliente.Cognome}, ${data[i].Cliente.Nome}</td>
+                    <td>${data[i].Cliente.Mobile}</td>
+                    <td>${data[i].CameraId}</td>
+                    <td>${data[i].Camera.TipologiaCamera.TipologiaCamera}</td>
+                    <td>${formatDate(data[i].InizioSoggiorno)}</td>
+                    <td>${formatDate(data[i].FineSoggiorno)}</td>
+                    <td>${data[i].NumeroNotti}</td>
+                    <td>$ ${data[i].Caparra}</td>
+                    <td>$ ${data[i].Tariffa}</td>
+                </tr>`
+                    }
+                }
+                if (selectorCF.value === "") {
+                    tbody.innerHTML = ''
+                    for (let i = 0; i < data.length; i++) {
+                        tbody.innerHTML += `<tr>
+                            <th scope="col">${data[i].PrenotazioneId}</th>
+                            <td>${data[i].Cliente.Cognome}, ${data[i].Cliente.Nome}</td>
+                            <td>${data[i].Cliente.Mobile}</td>
+                            <td>${data[i].CameraId}</td>
+                            <td>${data[i].Camera.TipologiaCamera.TipologiaCamera}</td>
+                            <td>${formatDate(data[i].InizioSoggiorno)}</td>
+                            <td>${formatDate(data[i].FineSoggiorno)}</td>
+                            <td>${data[i].NumeroNotti}</td>
+                            <td>$ ${data[i].Caparra}</td>
+                            <td>$ ${data[i].Tariffa}</td>
+                        </tr>`
+
+                    }
+                }
+
+            });
+    })
+
+    formatDate = (dateString) => {
+        // Extract the milliseconds from the date string
+        let milliseconds = parseInt(dateString.match(/\d+/)[0]);
+
+        // Create a new Date object from the milliseconds
+        let date = new Date(milliseconds);
+
+        // Get the day, month, and year components
+        let day = date.getDate();
+        let month = date.getMonth() + 1; // Adding 1 to the month because it is zero-based
+        let year = date.getFullYear();
+
+        // Format the components as dd/mm/yyyy
+        let formattedDate = `${day}/${month}/${year}`;
+        return formattedDate;
+    }
+</script>

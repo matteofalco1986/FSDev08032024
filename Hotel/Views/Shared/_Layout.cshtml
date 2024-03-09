@@ -22,14 +22,17 @@
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @if (User.Identity.IsAuthenticated)
                     {
+
                         <li>@Html.ActionLink("Camere disponibili", "Camere", "Backoffice", new { area = "" }, new { @class = "nav-link" })</li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Prenotazioni
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>@Html.ActionLink("Lista Prenotazioni", "Index", "Backoffice", new { area = "" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Lista Prenotazioni", "Prenotazioni", "Backoffice", new { area = "" }, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Inserisci una prenotazione", "Prenota", "Backoffice", new { area = "" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Richiedi un servizio", "Amenities", "Backoffice", new { area = "" }, new { @class = "dropdown-item" })</li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
