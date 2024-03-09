@@ -134,6 +134,7 @@
     <Compile Include="Models\ListaServiziAggiuntivi.cs" />
     <Compile Include="Models\Prenotazioni.cs" />
     <Compile Include="Models\Queries.cs" />
+    <Compile Include="Models\ServerStrings.cs" />
     <Compile Include="Models\TipiPrenotazione.cs" />
     <Compile Include="Models\TipologieCamera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
