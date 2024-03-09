@@ -10,11 +10,9 @@ un piccolo assortimento di dati gia pronti per testare. E' comunque possibile ag
 
 COLLEGARE LA APP AL PROPRIO DATABASE LOCALE
 Per farlo, andare nel file Web.config e sostituire alla ConnectionString corrente quella per il collegamento al proprio server. La stringa sarà come segue:
-	    <add
-			name="DbHotelConnection"
-			connectionString="Server=LAPTOP-1M2QKVCO\SQLEXPRESS; Initial Catalog=Blog; Integrated Security=true"
-			providerName="System.Data.SqlClient"
-		/>
+	    
+name="DbHotelConnection" connectionString="Server=LAPTOP-1M2QKVCO\SQLEXPRESS; Initial Catalog=Blog; Integrated Security=true" providerName="System.Data.SqlClient"
+		
 
 SOSTITUIRE L'URL PER LE OPERAZIONI ASINCRONE CON IL PROPRIO LOCALHOST
   -  Andare nel file Views/Backoffice/Prenotazioni.cshtml
