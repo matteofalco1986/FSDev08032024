@@ -5,11 +5,11 @@ Per far funzionare l'applicazione è fondamentale fare tre cose:
 - SOSTITURE L'URL PER LE OPERAZIONI ASINCRONE CON IL PROPRIO LOCALHOST
 
 CREARE IL DATABASE
-La cartella principale contiene un file "ScriptToBuildDatabase.sql". Il file contiene una query che va eseguita in SSMS per creare il DB. Il database contiene
+- La cartella principale contiene un file "ScriptToBuildDatabase.sql". Il file contiene una query che va eseguita in SSMS per creare il DB. Il database contiene
 un piccolo assortimento di dati gia pronti per testare. E' comunque possibile aggiungerne tramite SSMS o tramite le funzioni della WebApp.
 
 COLLEGARE LA APP AL PROPRIO DATABASE LOCALE
-Per farlo, andare nel file Web.config e sostituire alla ConnectionString corrente quella per il collegamento al proprio server. La stringa sarà come segue:
+- Per farlo, andare nel file Web.config e sostituire alla ConnectionString corrente quella per il collegamento al proprio server. La stringa sarà come segue:
 	    
 name="DbHotelConnection" connectionString="Server=LAPTOP-1M2QKVCO\SQLEXPRESS; Initial Catalog=Hotel; Integrated Security=true" providerName="System.Data.SqlClient"
 		
